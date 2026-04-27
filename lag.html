@@ -9,33 +9,11 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent; /* Remove blue highlight on click/tap */
+      -webkit-tap-highlight-color: transparent;
     }
 
-    /* ========== CSS VARIABLES FOR THEMING ========== */
+    /* Dark Mode Only - No Light Mode */
     :root {
-      /* Light Mode (default) */
-      --bg-gradient-start: #f7f5f0;
-      --bg-gradient-end: #e8e6e1;
-      --card-bg: rgba(255, 255, 245, 0.85);
-      --card-bg-hover: rgba(255, 255, 250, 0.96);
-      --text-primary: #1e2a2f;
-      --text-secondary: #4a5b55;
-      --accent-color: #2c5a2e;
-      --accent-hover: #1f4521;
-      --border-color: #e5d9bb;
-      --name-bg: #fef7e0;
-      --name-color: #3b2c1e;
-      --footer-color: #7c6e54;
-      --shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
-      --shadow-hover: 0 28px 36px -14px rgba(0, 0, 0, 0.28);
-      --input-bg: #ffffff;
-      --input-border: #d4cdb2;
-      --placeholder-color: #999;
-    }
-
-    body.dark {
-      /* Dark Mode */
       --bg-gradient-start: #1a1e2c;
       --bg-gradient-end: #0f1119;
       --card-bg: rgba(30, 35, 50, 0.9);
@@ -60,17 +38,16 @@
       font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
       color: var(--text-primary);
       padding: 2rem 1.5rem;
-      transition: background 0.3s ease, color 0.2s ease;
+      transition: background 0.3s ease;
       min-height: 100vh;
     }
 
-    /* Scroll to top button */
+    /* Scroll to top button - using provided image */
     .scroll-top-btn {
       position: fixed;
       bottom: 30px;
       right: 30px;
       background: var(--accent-color);
-      color: white;
       width: 50px;
       height: 50px;
       border-radius: 50%;
@@ -84,7 +61,15 @@
       box-shadow: var(--shadow);
       border: none;
       z-index: 1000;
-      font-size: 24px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .scroll-top-btn img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
     }
 
     .scroll-top-btn.show {
@@ -97,7 +82,7 @@
       transform: translateY(-3px);
     }
 
-    /* Header Section */
+    /* Header Section - removed subtitle lines */
     .header {
       text-align: center;
       margin-bottom: 2rem;
@@ -115,34 +100,13 @@
       text-shadow: 2px 2px 12px rgba(0,0,0,0.05);
     }
 
-    .header p {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      margin-top: 0.5rem;
-      display: inline-block;
-      padding-bottom: 0.4rem;
-      font-weight: 500;
-    }
-
-    .craft-badge {
-      display: inline-block;
-      background: rgba(46, 59, 44, 0.2);
-      backdrop-filter: blur(4px);
-      border-radius: 60px;
-      padding: 0.2rem 1rem;
-      font-size: 0.8rem;
-      margin-top: 0.8rem;
-      color: var(--accent-color);
-      font-weight: 500;
-    }
-
-    /* Top bar with search and dark mode */
+    /* Top bar with search */
     .top-bar {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto 2rem auto;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       gap: 1rem;
       padding: 0 0.5rem;
@@ -150,7 +114,8 @@
 
     .search-container {
       flex: 1;
-      min-width: 200px;
+      max-width: 400px;
+      margin-left: auto;
     }
 
     .search-input {
@@ -168,32 +133,11 @@
 
     .search-input:focus {
       border-color: var(--accent-color);
-      box-shadow: 0 0 0 3px rgba(44, 90, 46, 0.2);
+      box-shadow: 0 0 0 3px rgba(74, 139, 76, 0.2);
     }
 
     .search-input::placeholder {
       color: var(--placeholder-color);
-    }
-
-    .dark-mode-toggle {
-      background: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: 60px;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-weight: 600;
-      color: var(--text-primary);
-      transition: all 0.2s;
-      backdrop-filter: blur(4px);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: inherit;
-    }
-
-    .dark-mode-toggle:hover {
-      background: var(--card-bg-hover);
-      transform: scale(1.02);
     }
 
     /* Gallery grid */
@@ -225,13 +169,12 @@
       background: var(--card-bg-hover);
     }
 
-    /* Hide cards during search */
     .image-card.hidden {
       display: none;
     }
 
     .img-container {
-      background: rgba(0, 0, 0, 0.05);
+      background: rgba(0, 0, 0, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -322,6 +265,13 @@
       transform: scale(0.98);
     }
 
+    /* Share button with image icon - using Share.png from your images folder */
+    .share-btn img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
+
     /* Status messages */
     .status-message {
       grid-column: 1 / -1;
@@ -379,6 +329,7 @@
       .header h1 { font-size: 2.2rem; }
       .gallery { gap: 1.2rem; }
       .top-bar { flex-direction: column; align-items: stretch; }
+      .search-container { max-width: 100%; margin-left: 0; }
       .button-group { flex-direction: column; }
     }
   </style>
@@ -386,51 +337,48 @@
 <body>
 
 <div class="header">
-  <h1>🏺 Craftland Image Assets</h1>
-  <p>by CraftX · artisanal visual inventory</p>
-  <div class="craft-badge">📁 Synced from GitHub /assets folder</div>
+  <h1>Craftland Image Assets</h1>
 </div>
 
 <div class="top-bar">
   <div class="search-container">
-    <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search images by name...">
+    <input type="text" class="search-input" id="searchInput" placeholder="Search images by name...">
   </div>
-  <button class="dark-mode-toggle" id="darkModeToggle">🌙 Dark Mode</button>
 </div>
 
 <div class="gallery" id="galleryContainer">
   <div class="status-message">
     <div class="loading-spinner"></div>
-    <div>📡 Loading craft assets from repository...</div>
-    <div style="font-size:0.8rem; margin-top: 12px;">Looking for images inside <strong>/assets/</strong> folder</div>
+    <div>Loading craft assets from repository...</div>
+    <div style="font-size:0.8rem; margin-top: 12px;">Looking for images inside /images/ folder</div>
   </div>
 </div>
 
-<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">⬆️</button>
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">
+  <img src="https://raw.githubusercontent.com/LAG-FF/Craftland-Assets/main/images/Scrollup.png" alt="Scroll up" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22white%22%3E%3Cpath d=%22M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z%22/%3E%3C/svg%3E'">
+</button>
 
 <footer>
-  ✨ Craftland by CraftX — Images from GitHub /assets folder. Add your images, commit & push, and they appear instantly.
+  Craftland Image Assets
 </footer>
 
 <script>
   // ==============================================
-  // CONFIGURATION FOR YOUR REPO (LAG-FF/Craftland-Assets)
+  // CONFIGURATION - Loading from /images/ folder
   // ==============================================
   const GITHUB_USERNAME = "LAG-FF";
   const REPO_NAME = "Craftland-Assets";
-  const IMAGES_FOLDER = "assets";      // Changed from "images" to "assets" as you requested
+  const IMAGES_FOLDER = "images";      // Loading from images folder
   const BRANCH = "main";
 
   const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".bmp"];
   
   const galleryEl = document.getElementById("galleryContainer");
   const searchInput = document.getElementById("searchInput");
-  const darkModeToggle = document.getElementById("darkModeToggle");
   const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-  let currentAssets = []; // Store current assets for filtering
+  let currentAssets = [];
 
-  // Helper functions
   function isImageFile(filename) {
     const ext = filename.substring(filename.lastIndexOf('.')).toLowerCase();
     return IMAGE_EXTENSIONS.includes(ext);
@@ -444,7 +392,6 @@
     return base.replace(/\b\w/g, l => l.toUpperCase());
   }
 
-  // Fetch images from GitHub API using the "assets" folder
   async function fetchImageAssetsFromGitHub() {
     const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${IMAGES_FOLDER}?ref=${BRANCH}`;
     
@@ -452,7 +399,7 @@
     
     if (!response.ok) {
       if (response.status === 404) {
-        throw new Error(`Folder '/${IMAGES_FOLDER}' not found in repo "${GITHUB_USERNAME}/${REPO_NAME}". Please ensure the folder exists with your images (BG.jpg, Download.png, etc.).`);
+        throw new Error(`Folder '/${IMAGES_FOLDER}' not found in repo. Please create the folder and add your images.`);
       } else {
         throw new Error(`GitHub API error ${response.status}: ${response.statusText}`);
       }
@@ -461,7 +408,7 @@
     const files = await response.json();
     
     if (!Array.isArray(files)) {
-      throw new Error(`The path '${IMAGES_FOLDER}' is not a valid folder or is empty.`);
+      throw new Error(`The '${IMAGES_FOLDER}' folder appears to be empty.`);
     }
     
     const imageFiles = files.filter(file => file.type === "file" && isImageFile(file.name));
@@ -474,7 +421,6 @@
     }));
   }
 
-  // Create card with Download + Share buttons
   function createImageCard(asset) {
     const card = document.createElement('div');
     card.className = 'image-card';
@@ -507,12 +453,12 @@
     const downloadBtn = document.createElement('button');
     downloadBtn.className = 'download-btn';
     const ext = asset.name.substring(asset.name.lastIndexOf('.')+1).toUpperCase();
-    downloadBtn.innerHTML = `⬇️ Download · ${ext}`;
+    downloadBtn.innerHTML = `Download · ${ext}`;
     
     downloadBtn.addEventListener('click', async (e) => {
       e.stopPropagation();
       const originalText = downloadBtn.innerHTML;
-      downloadBtn.innerHTML = '⏳ ...';
+      downloadBtn.innerHTML = 'Loading...';
       downloadBtn.disabled = true;
       try {
         const response = await fetch(asset.rawUrl);
@@ -526,14 +472,14 @@
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(blobUrl);
-        downloadBtn.innerHTML = '✓ Done!';
+        downloadBtn.innerHTML = 'Downloaded!';
         setTimeout(() => {
           downloadBtn.innerHTML = originalText;
           downloadBtn.disabled = false;
         }, 1500);
       } catch (err) {
         window.open(asset.rawUrl, '_blank');
-        downloadBtn.innerHTML = '⬇️ Retry';
+        downloadBtn.innerHTML = 'Retry';
         setTimeout(() => {
           downloadBtn.innerHTML = originalText;
           downloadBtn.disabled = false;
@@ -541,10 +487,20 @@
       }
     });
     
-    // Share button (uses Web Share API if available, otherwise copies link)
+    // Share button with Share.png image
     const shareBtn = document.createElement('button');
     shareBtn.className = 'share-btn';
-    shareBtn.innerHTML = `📤 Share Image`;
+    
+    const shareIcon = document.createElement('img');
+    shareIcon.src = "https://raw.githubusercontent.com/LAG-FF/Craftland-Assets/main/images/Share.png";
+    shareIcon.alt = "share";
+    shareIcon.style.width = "16px";
+    shareIcon.style.height = "16px";
+    shareIcon.onerror = () => { shareIcon.style.display = 'none'; };
+    
+    const shareText = document.createTextNode(' Share Image');
+    shareBtn.appendChild(shareIcon);
+    shareBtn.appendChild(shareText);
     
     shareBtn.addEventListener('click', async (e) => {
       e.stopPropagation();
@@ -556,11 +512,12 @@
             url: asset.rawUrl,
           });
         } else {
-          // Fallback: copy image URL to clipboard
           await navigator.clipboard.writeText(asset.rawUrl);
           shareBtn.innerHTML = '✓ Link Copied!';
           setTimeout(() => {
-            shareBtn.innerHTML = `📤 Share Image`;
+            shareBtn.innerHTML = '';
+            shareBtn.appendChild(shareIcon);
+            shareBtn.appendChild(document.createTextNode(' Share Image'));
           }, 2000);
         }
       } catch (err) {
@@ -578,7 +535,6 @@
     return card;
   }
   
-  // Filter gallery based on search input
   function filterGallery(searchTerm) {
     const cards = document.querySelectorAll('.image-card');
     const term = searchTerm.toLowerCase().trim();
@@ -602,10 +558,10 @@
       const emptyMsg = document.createElement('div');
       emptyMsg.className = 'status-message';
       emptyMsg.innerHTML = `
-        <div style="font-size:2rem;">🖼️✨</div>
-        <h3>No images found in the "${IMAGES_FOLDER}" folder</h3>
-        <p>Make sure you have uploaded images like <strong>BG.jpg, Download.png, Share.png, Search.png, Scrollup.png</strong> to the <strong>/${IMAGES_FOLDER}/</strong> folder.</p>
-        <button class="retry-link" id="retryFetchBtn">⟳ Refresh Gallery</button>
+        <div style="font-size:2rem;">🖼️</div>
+        <h3>No images found in the "images" folder</h3>
+        <p>Make sure you have uploaded images to the <strong>/images/</strong> folder in your GitHub repository.</p>
+        <button class="retry-link" id="retryFetchBtn">Refresh Gallery</button>
       `;
       galleryEl.appendChild(emptyMsg);
       const retryBtn = emptyMsg.querySelector('#retryFetchBtn');
@@ -619,7 +575,6 @@
     }
     galleryEl.appendChild(fragment);
     
-    // Re-apply search filter if any search term exists
     if (searchInput.value.trim() !== '') {
       filterGallery(searchInput.value);
     }
@@ -633,12 +588,12 @@
       <div>⚠️ Loading Error</div>
       <p style="margin-top: 0.75rem;">${escapeHtml(errorMsg)}</p>
       <div style="margin-top: 1.2rem;">
-        <button class="retry-link" id="errorRetryBtn">⟳ Retry Connection</button>
+        <button class="retry-link" id="errorRetryBtn">Retry Connection</button>
       </div>
       <div style="font-size:0.75rem; margin-top: 1rem;">
-        💡 Make sure:<br/>
-        1. The folder <strong>/assets/</strong> exists in your repository.<br/>
-        2. Images (BG.jpg, Download.png, etc.) are inside /assets/.<br/>
+        Make sure:<br/>
+        1. The folder <strong>/images/</strong> exists in your repository.<br/>
+        2. Images are inside the /images/ folder.<br/>
         3. Repository is public.
       </div>
     `;
@@ -660,8 +615,8 @@
     galleryEl.innerHTML = `
       <div class="status-message">
         <div class="loading-spinner"></div>
-        <div>🔍 Scanning GitHub · fetching from ${GITHUB_USERNAME}/${REPO_NAME}/${IMAGES_FOLDER}</div>
-        <div style="font-size:0.7rem; margin-top:8px;">Looking for BG.jpg, Download.png, Share.png, Search.png, Scrollup.png ...</div>
+        <div>Scanning GitHub · fetching from ${GITHUB_USERNAME}/${REPO_NAME}/images</div>
+        <div style="font-size:0.7rem; margin-top:8px;">Loading images from /images/ folder</div>
       </div>
     `;
     
@@ -672,30 +627,6 @@
       showErrorState(err.message || "Unable to load images. Check console or repo settings.");
     }
   }
-  
-  // Dark Mode logic
-  function initDarkMode() {
-    const savedTheme = localStorage.getItem('craftland-theme');
-    if (savedTheme === 'dark') {
-      document.body.classList.add('dark');
-      darkModeToggle.innerHTML = '☀️ Light Mode';
-    } else {
-      document.body.classList.remove('dark');
-      darkModeToggle.innerHTML = '🌙 Dark Mode';
-    }
-  }
-  
-  darkModeToggle.addEventListener('click', () => {
-    if (document.body.classList.contains('dark')) {
-      document.body.classList.remove('dark');
-      localStorage.setItem('craftland-theme', 'light');
-      darkModeToggle.innerHTML = '🌙 Dark Mode';
-    } else {
-      document.body.classList.add('dark');
-      localStorage.setItem('craftland-theme', 'dark');
-      darkModeToggle.innerHTML = '☀️ Light Mode';
-    }
-  });
   
   // Scroll to top logic
   window.addEventListener('scroll', () => {
@@ -717,7 +648,6 @@
   
   // Initialize
   window.addEventListener('DOMContentLoaded', () => {
-    initDarkMode();
     loadAndDisplayImages();
   });
 </script>
