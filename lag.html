@@ -12,7 +12,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Dark Mode Only - No Light Mode */
+    /* Dark Mode Only */
     :root {
       --bg-gradient-start: #1a1e2c;
       --bg-gradient-end: #0f1119;
@@ -38,11 +38,10 @@
       font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
       color: var(--text-primary);
       padding: 2rem 1.5rem;
-      transition: background 0.3s ease;
       min-height: 100vh;
     }
 
-    /* Scroll to top button - using provided image */
+    /* Scroll to top button */
     .scroll-top-btn {
       position: fixed;
       bottom: 30px;
@@ -82,11 +81,9 @@
       transform: translateY(-3px);
     }
 
-    /* Header Section - removed subtitle lines */
     .header {
       text-align: center;
       margin-bottom: 2rem;
-      position: relative;
     }
 
     .header h1 {
@@ -97,7 +94,6 @@
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      text-shadow: 2px 2px 12px rgba(0,0,0,0.05);
     }
 
     /* Top bar with search */
@@ -127,7 +123,6 @@
       color: var(--text-primary);
       font-size: 1rem;
       outline: none;
-      transition: all 0.2s;
       font-family: inherit;
     }
 
@@ -140,7 +135,6 @@
       color: var(--placeholder-color);
     }
 
-    /* Gallery grid */
     .gallery {
       max-width: 1400px;
       margin: 0 auto;
@@ -150,7 +144,6 @@
       padding: 0.5rem;
     }
 
-    /* Image card */
     .image-card {
       background: var(--card-bg);
       backdrop-filter: blur(2px);
@@ -190,7 +183,6 @@
       height: auto;
       object-fit: contain;
       border-radius: 16px;
-      transition: all 0.2s;
       display: block;
     }
 
@@ -204,7 +196,6 @@
     .image-name {
       font-weight: 700;
       font-size: 1.1rem;
-      letter-spacing: -0.2px;
       background: var(--name-bg);
       display: inline-block;
       align-self: flex-start;
@@ -213,7 +204,6 @@
       color: var(--name-color);
       border: 1px solid var(--border-color);
       word-break: break-word;
-      overflow-wrap: anywhere;
     }
 
     .button-group {
@@ -230,7 +220,6 @@
       font-weight: 600;
       font-size: 0.9rem;
       cursor: pointer;
-      transition: all 0.2s;
       font-family: inherit;
       display: flex;
       align-items: center;
@@ -241,7 +230,6 @@
     .download-btn {
       background: var(--accent-color);
       color: white;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
     .download-btn:hover {
@@ -261,29 +249,21 @@
       transform: scale(1.01);
     }
 
-    .download-btn:active, .share-btn:active {
-      transform: scale(0.98);
-    }
-
-    /* Share button with image icon - using Share.png from your images folder */
-    .share-btn img {
+    .share-btn img, .download-btn img {
       width: 16px;
       height: 16px;
       object-fit: contain;
     }
 
-    /* Status messages */
     .status-message {
       grid-column: 1 / -1;
       text-align: center;
       padding: 3rem;
       background: var(--card-bg);
       border-radius: 48px;
-      font-weight: 500;
       color: var(--text-secondary);
       margin: 2rem auto;
       max-width: 600px;
-      backdrop-filter: blur(8px);
       border: 1px solid var(--border-color);
     }
 
@@ -309,7 +289,6 @@
       display: inline-block;
       margin-top: 1rem;
       cursor: pointer;
-      font-weight: 500;
       color: white;
       border: none;
     }
@@ -317,11 +296,12 @@
     footer {
       text-align: center;
       margin-top: 4rem;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       color: var(--footer-color);
       border-top: 1px solid var(--border-color);
       padding-top: 2rem;
-      font-weight: 400;
+      font-weight: 500;
+      letter-spacing: 1px;
     }
 
     @media (max-width: 640px) {
@@ -330,7 +310,6 @@
       .gallery { gap: 1.2rem; }
       .top-bar { flex-direction: column; align-items: stretch; }
       .search-container { max-width: 100%; margin-left: 0; }
-      .button-group { flex-direction: column; }
     }
   </style>
 </head>
@@ -342,33 +321,32 @@
 
 <div class="top-bar">
   <div class="search-container">
-    <input type="text" class="search-input" id="searchInput" placeholder="Search images by name...">
+    <input type="text" class="search-input" id="searchInput" placeholder="Search images...">
   </div>
 </div>
 
 <div class="gallery" id="galleryContainer">
   <div class="status-message">
     <div class="loading-spinner"></div>
-    <div>Loading craft assets from repository...</div>
-    <div style="font-size:0.8rem; margin-top: 12px;">Looking for images inside /images/ folder</div>
+    <div>Loading images from repository...</div>
   </div>
 </div>
 
-<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">
-  <img src="https://raw.githubusercontent.com/LAG-FF/Craftland-Assets/main/images/Scrollup.png" alt="Scroll up" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22white%22%3E%3Cpath d=%22M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z%22/%3E%3C/svg%3E'">
+<button class="scroll-top-btn" id="scrollTopBtn">
+  <img src="https://raw.githubusercontent.com/LAG-FF/Craftland-Assets/main/assets/Scrollup.png" alt="↑" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22white%22%3E%3Cpath d=%22M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z%22/%3E%3C/svg%3E'">
 </button>
 
-<footer>
-  Craftland Image Assets
-</footer>
+<footer>POWERED BY CRAFTX</footer>
 
 <script>
   // ==============================================
-  // CONFIGURATION - Loading from /images/ folder
+  // /images/ folder = content shown to users
+  // /assets/ folder = website UI icons
   // ==============================================
   const GITHUB_USERNAME = "LAG-FF";
   const REPO_NAME = "Craftland-Assets";
-  const IMAGES_FOLDER = "images";      // Loading from images folder
+  const IMAGES_FOLDER = "images";      // Content images
+  const ASSETS_FOLDER = "assets";      // UI icons
   const BRANCH = "main";
 
   const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".bmp"];
@@ -376,8 +354,6 @@
   const galleryEl = document.getElementById("galleryContainer");
   const searchInput = document.getElementById("searchInput");
   const scrollTopBtn = document.getElementById("scrollTopBtn");
-
-  let currentAssets = [];
 
   function isImageFile(filename) {
     const ext = filename.substring(filename.lastIndexOf('.')).toLowerCase();
@@ -399,16 +375,16 @@
     
     if (!response.ok) {
       if (response.status === 404) {
-        throw new Error(`Folder '/${IMAGES_FOLDER}' not found in repo. Please create the folder and add your images.`);
+        throw new Error(`The '/${IMAGES_FOLDER}' folder was not found. Please create it and add your images.`);
       } else {
-        throw new Error(`GitHub API error ${response.status}: ${response.statusText}`);
+        throw new Error(`GitHub API error ${response.status}`);
       }
     }
     
     const files = await response.json();
     
     if (!Array.isArray(files)) {
-      throw new Error(`The '${IMAGES_FOLDER}' folder appears to be empty.`);
+      throw new Error(`The '/${IMAGES_FOLDER}' folder appears to be empty.`);
     }
     
     const imageFiles = files.filter(file => file.type === "file" && isImageFile(file.name));
@@ -416,9 +392,12 @@
     return imageFiles.map(file => ({
       name: file.name,
       displayName: getImageDisplayName(file.name),
-      rawUrl: file.download_url,
-      size: file.size
+      rawUrl: file.download_url
     }));
+  }
+
+  function getAssetUrl(filename) {
+    return `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${REPO_NAME}/${BRANCH}/${ASSETS_FOLDER}/${filename}`;
   }
 
   function createImageCard(asset) {
@@ -449,15 +428,24 @@
     const buttonGroup = document.createElement('div');
     buttonGroup.className = 'button-group';
     
-    // Download button
+    // Download button with Download.png icon from assets
     const downloadBtn = document.createElement('button');
     downloadBtn.className = 'download-btn';
-    const ext = asset.name.substring(asset.name.lastIndexOf('.')+1).toUpperCase();
-    downloadBtn.innerHTML = `Download · ${ext}`;
+    
+    const downloadIcon = document.createElement('img');
+    downloadIcon.src = getAssetUrl('Download.png');
+    downloadIcon.alt = "download";
+    downloadIcon.style.width = "16px";
+    downloadIcon.style.height = "16px";
+    downloadIcon.onerror = () => { downloadIcon.style.display = 'none'; };
+    
+    const downloadText = document.createTextNode(' Download');
+    downloadBtn.appendChild(downloadIcon);
+    downloadBtn.appendChild(downloadText);
     
     downloadBtn.addEventListener('click', async (e) => {
       e.stopPropagation();
-      const originalText = downloadBtn.innerHTML;
+      const originalHTML = downloadBtn.innerHTML;
       downloadBtn.innerHTML = 'Loading...';
       downloadBtn.disabled = true;
       try {
@@ -474,31 +462,31 @@
         URL.revokeObjectURL(blobUrl);
         downloadBtn.innerHTML = 'Downloaded!';
         setTimeout(() => {
-          downloadBtn.innerHTML = originalText;
+          downloadBtn.innerHTML = originalHTML;
           downloadBtn.disabled = false;
         }, 1500);
       } catch (err) {
         window.open(asset.rawUrl, '_blank');
         downloadBtn.innerHTML = 'Retry';
         setTimeout(() => {
-          downloadBtn.innerHTML = originalText;
+          downloadBtn.innerHTML = originalHTML;
           downloadBtn.disabled = false;
         }, 1500);
       }
     });
     
-    // Share button with Share.png image
+    // Share button with Share.png icon from assets
     const shareBtn = document.createElement('button');
     shareBtn.className = 'share-btn';
     
     const shareIcon = document.createElement('img');
-    shareIcon.src = "https://raw.githubusercontent.com/LAG-FF/Craftland-Assets/main/images/Share.png";
+    shareIcon.src = getAssetUrl('Share.png');
     shareIcon.alt = "share";
     shareIcon.style.width = "16px";
     shareIcon.style.height = "16px";
     shareIcon.onerror = () => { shareIcon.style.display = 'none'; };
     
-    const shareText = document.createTextNode(' Share Image');
+    const shareText = document.createTextNode(' Share');
     shareBtn.appendChild(shareIcon);
     shareBtn.appendChild(shareText);
     
@@ -508,20 +496,19 @@
         if (navigator.share) {
           await navigator.share({
             title: `Craftland Asset: ${asset.displayName}`,
-            text: `Check out this image from Craftland: ${asset.displayName}`,
             url: asset.rawUrl,
           });
         } else {
           await navigator.clipboard.writeText(asset.rawUrl);
-          shareBtn.innerHTML = '✓ Link Copied!';
+          shareBtn.innerHTML = '✓ Copied!';
           setTimeout(() => {
             shareBtn.innerHTML = '';
             shareBtn.appendChild(shareIcon);
-            shareBtn.appendChild(document.createTextNode(' Share Image'));
+            shareBtn.appendChild(document.createTextNode(' Share'));
           }, 2000);
         }
       } catch (err) {
-        alert('Could not share. You can right-click the image to save it.');
+        alert('Could not share. Right-click the image to save it.');
       }
     });
     
@@ -551,17 +538,16 @@
   }
   
   function renderGallery(assets) {
-    currentAssets = assets;
     galleryEl.innerHTML = '';
     
     if (!assets || assets.length === 0) {
       const emptyMsg = document.createElement('div');
       emptyMsg.className = 'status-message';
       emptyMsg.innerHTML = `
-        <div style="font-size:2rem;">🖼️</div>
+        <div>📁</div>
         <h3>No images found in the "images" folder</h3>
-        <p>Make sure you have uploaded images to the <strong>/images/</strong> folder in your GitHub repository.</p>
-        <button class="retry-link" id="retryFetchBtn">Refresh Gallery</button>
+        <p>Add your images to the <strong>/images/</strong> folder in your GitHub repository.</p>
+        <button class="retry-link" id="retryFetchBtn">Refresh</button>
       `;
       galleryEl.appendChild(emptyMsg);
       const retryBtn = emptyMsg.querySelector('#retryFetchBtn');
@@ -585,17 +571,9 @@
     const errorDiv = document.createElement('div');
     errorDiv.className = 'status-message';
     errorDiv.innerHTML = `
-      <div>⚠️ Loading Error</div>
-      <p style="margin-top: 0.75rem;">${escapeHtml(errorMsg)}</p>
-      <div style="margin-top: 1.2rem;">
-        <button class="retry-link" id="errorRetryBtn">Retry Connection</button>
-      </div>
-      <div style="font-size:0.75rem; margin-top: 1rem;">
-        Make sure:<br/>
-        1. The folder <strong>/images/</strong> exists in your repository.<br/>
-        2. Images are inside the /images/ folder.<br/>
-        3. Repository is public.
-      </div>
+      <div>⚠️ Error</div>
+      <p>${escapeHtml(errorMsg)}</p>
+      <button class="retry-link" id="errorRetryBtn">Retry</button>
     `;
     galleryEl.appendChild(errorDiv);
     const retry = errorDiv.querySelector('#errorRetryBtn');
@@ -615,8 +593,7 @@
     galleryEl.innerHTML = `
       <div class="status-message">
         <div class="loading-spinner"></div>
-        <div>Scanning GitHub · fetching from ${GITHUB_USERNAME}/${REPO_NAME}/images</div>
-        <div style="font-size:0.7rem; margin-top:8px;">Loading images from /images/ folder</div>
+        <div>Loading from /images/ folder...</div>
       </div>
     `;
     
@@ -624,11 +601,10 @@
       const assets = await fetchImageAssetsFromGitHub();
       renderGallery(assets);
     } catch (err) {
-      showErrorState(err.message || "Unable to load images. Check console or repo settings.");
+      showErrorState(err.message);
     }
   }
   
-  // Scroll to top logic
   window.addEventListener('scroll', () => {
     if (window.scrollY > 300) {
       scrollTopBtn.classList.add('show');
@@ -641,12 +617,10 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
   
-  // Search event listener
   searchInput.addEventListener('input', (e) => {
     filterGallery(e.target.value);
   });
   
-  // Initialize
   window.addEventListener('DOMContentLoaded', () => {
     loadAndDisplayImages();
   });
