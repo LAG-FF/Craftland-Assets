@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Craftland Image assets | CraftX</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f7f5f0 0%, #e8e6e1 100%);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      color: #1e2a2f;
+      padding: 2rem 1.5rem;
+    }
+
+    /* glassmorphic header */
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #2c5a2e, #b87c2e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 2px 2px 12px rgba(0,0,0,0.05);
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      color: #4a5b55;
+      margin-top: 0.5rem;
+      border-bottom: 2px solid #d4cdb2;
+      display: inline-block;
+      padding-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .craft-badge {
+      display: inline-block;
+      background: #2e3b2c30;
+      backdrop-filter: blur(4px);
+      border-radius: 60px;
+      padding: 0.2rem 1rem;
+      font-size: 0.8rem;
+      margin-top: 0.8rem;
+      color: #3a5c3a;
+      font-weight: 500;
+    }
+
+    /* gallery grid */
+    .gallery {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 0.5rem;
+    }
+
+    /* image card */
+    .image-card {
+      background: rgba(255, 255, 245, 0.85);
+      backdrop-filter: blur(2px);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(232, 220, 180, 0.5);
+      transition: transform 0.2s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .image-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 36px -14px rgba(0, 0, 0, 0.28);
+      background: rgba(255, 255, 250, 0.96);
+    }
+
+    /* image container - consistent aspect */
+    .img-container {
+      background: #dbd2bc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      min-height: 240px;
+      background: #f2efe6;
+      border-bottom: 1px solid #ece3d0;
+    }
+
+    .img-container img {
+      max-width: 100%;
+      max-height: 260px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 18px;
+      transition: all 0.2s;
+      display: block;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .card-info {
+      padding: 1.2rem 1.2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .image-name {
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.2px;
+      background: #fef7e0;
+      display: inline-block;
+      align-self: flex-start;
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      color: #3b2c1e;
+      border: 1px solid #e5d9bb;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .download-btn {
+      background: #2c5a2e;
+      border: none;
+      padding: 0.8rem 1rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      margin-top: 0.3rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .download-btn:hover {
+      background: #1f4521;
+      transform: scale(1.01);
+      box-shadow: 0 8px 18px rgba(44, 90, 46, 0.3);
+    }
+
+    .download-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* loading / empty / error states */
+    .status-message {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      background: #fef6e0;
+      border-radius: 48px;
+      font-weight: 500;
+      color: #6b5a3e;
+      margin: 2rem auto;
+      max-width: 600px;
+      backdrop-filter: blur(8px);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      border: 3px solid #e2dccd;
+      border-top-color: #b87c2e;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 0.8rem;
+      color: #7c6e54;
+      border-top: 1px solid #dcd3ba;
+      padding-top: 2rem;
+      font-weight: 400;
+    }
+
+    /* small responsive */
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+      .header h1 {
+        font-size: 2.4rem;
+      }
+      .gallery {
+        gap: 1.2rem;
+      }
+    }
+
+    .retry-link {
+      background: #c7b17a30;
+      border-radius: 40px;
+      padding: 0.3rem 1rem;
+      display: inline-block;
+      margin-top: 1rem;
+      cursor: pointer;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏺 Craftland Image assets</h1>
+  <p>by CraftX · artisanal visual inventory</p>
+  <div class="craft-badge">📁 auto-sync from GitHub folder → dynamic gallery</div>
+</div>
+
+<div class="gallery" id="galleryContainer">
+  <!-- dynamic cards will be injected here -->
+  <div class="status-message">
+    <div class="loading-spinner"></div>
+    <div>📡 loading craft assets from repository...</div>
+    <div style="font-size:0.8rem; margin-top: 12px;">looking for images inside <strong style="background:#e2d9c5; padding:2px 6px; border-radius:20px;">/images/</strong> folder</div>
+  </div>
+</div>
+
+<footer>
+  ✨ Craftland by CraftX — images fetched directly from GitHub repo. Add your images to <code style="background:#e2ddcf; padding:2px 8px; border-radius:20px;">/images/</code> folder, commit & push, and they appear instantly.
+</footer>
+
+<script>
+  // ----------------------------------------------
+  // CONFIGURATION - change these to match your repo
+  // ----------------------------------------------
+  // For the website to work on Vercel / GitHub Pages, we need to list image files from a GitHub folder.
+  // There is NO automatic directory listing API from GitHub raw content, but we can use GitHub Contents API (public repos)
+  // So this solution uses GitHub REST API to fetch all image files from a given folder.
+  // You just need to set:
+  // 1. GITHUB_USERNAME / REPO_NAME
+  // 2. FOLDER_PATH (where images are stored, e.g., "images" or "assets/images")
+  // The script will fetch all files with image extensions from that folder, generate cards with name and download.
+  //
+  // IMPORTANT: For public repo, no token needed. The website will be deployed on Vercel.
+  // When you add images to the folder (commit & push), they will automatically appear on the website.
+  // ______________________________________________
+
+  const GITHUB_USERNAME = "LAG-FF";    // 👈 CHANGE to your GitHub username
+  const REPO_NAME = "Craftland-Assets";                // 👈 CHANGE to your repository name
+  const IMAGES_FOLDER = "images";                    // 👈 Folder where images are stored (e.g., "images" or "assets")
+  const BRANCH = "main";                             // usually main or master
+
+  // Allowed image extensions (case-insensitive)
+  const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".bmp"];
+
+  // DOM elements
+  const galleryEl = document.getElementById("galleryContainer");
+
+  // Helper: check if file is an image by extension
+  function isImageFile(filename) {
+    const ext = filename.substring(filename.lastIndexOf('.')).toLowerCase();
+    return IMAGE_EXTENSIONS.includes(ext);
+  }
+
+  // get clean image name without extension (for displaying)
+  function getImageDisplayName(filename) {
+    const lastDot = filename.lastIndexOf('.');
+    if (lastDot === -1) return filename;
+    let base = filename.substring(0, lastDot);
+    // replace underscores/dashes with spaces for nicer read
+    base = base.replace(/[-_]/g, ' ');
+    // capitalize first letter of each word?
+    return base.replace(/\b\w/g, l => l.toUpperCase());
+  }
+
+  // fetch image list from GitHub Contents API
+  async function fetchImageAssetsFromGitHub() {
+    const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${IMAGES_FOLDER}?ref=${BRANCH}`;
+    
+    try {
+      const response = await fetch(apiUrl);
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error(`Folder '/${IMAGES_FOLDER}' not found in repo "${GITHUB_USERNAME}/${REPO_NAME}". Please create the folder and add images.`);
+        } else {
+          throw new Error(`GitHub API error ${response.status}: ${response.statusText}`);
+        }
+      }
+      
+      const files = await response.json();
+      
+      // Ensure it's an array (API returns array for directory)
+      if (!Array.isArray(files)) {
+        // if response is not array (maybe a single file or error) means folder might be empty or not directory
+        throw new Error(`The path '${IMAGES_FOLDER}' does not appear to be a folder or is empty.`);
+      }
+      
+      // filter only image files
+      const imageFiles = files.filter(file => file.type === "file" && isImageFile(file.name));
+      
+      // map to useful asset info: download url (raw) + name + original github url
+      const assets = imageFiles.map(file => ({
+        name: file.name,
+        displayName: getImageDisplayName(file.name),
+        rawUrl: file.download_url,   // direct image url (raw.githubusercontent)
+        githubUrl: file.html_url,
+        size: file.size
+      }));
+      
+      return assets;
+      
+    } catch (err) {
+      console.error("Failed to fetch images:", err);
+      throw err;
+    }
+  }
+
+  // function to create image card DOM element
+  function createImageCard(asset) {
+    const card = document.createElement('div');
+    card.className = 'image-card';
+    
+    // image container
+    const imgDiv = document.createElement('div');
+    imgDiv.className = 'img-container';
+    const img = document.createElement('img');
+    img.alt = asset.displayName;
+    img.loading = "lazy";
+    // set src directly from raw URL
+    img.src = asset.rawUrl;
+    // in case of broken image (file might be corrupted or not accessible)
+    img.onerror = () => {
+      img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24' fill='none' stroke='%2392856e' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Ccircle cx='8.5' cy='8.5' r='1.5' fill='%2392856e'%3E%3C/circle%3E%3Cpolyline points='21 15 16 10 5 21'%3E%3C/polyline%3E%3C/svg%3E";
+      img.style.opacity = '0.7';
+      img.style.objectFit = 'contain';
+    };
+    imgDiv.appendChild(img);
+    
+    // info section
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'card-info';
+    
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'image-name';
+    nameSpan.textContent = asset.displayName;
+    
+    const downloadBtn = document.createElement('button');
+    downloadBtn.className = 'download-btn';
+    // Download icon + text
+    downloadBtn.innerHTML = `⬇️ Download · ${asset.name.substring(asset.name.lastIndexOf('.')+1).toUpperCase()}`;
+    
+    // download handler: uses fetch and blob to force download with correct filename
+    downloadBtn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const originalText = downloadBtn.innerHTML;
+      downloadBtn.innerHTML = '⏳ Fetching...';
+      downloadBtn.disabled = true;
+      try {
+        // we fetch the image as blob to trigger download with proper filename
+        const response = await fetch(asset.rawUrl);
+        if (!response.ok) throw new Error('Network response error');
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = asset.name;   // original filename
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(blobUrl);
+        downloadBtn.innerHTML = '✓ Downloaded!';
+        setTimeout(() => {
+          if (downloadBtn) downloadBtn.innerHTML = originalText;
+          downloadBtn.disabled = false;
+        }, 1500);
+      } catch (err) {
+        console.warn("fallback direct download");
+        // fallback: use anchor with target and download attribute may not always force, but works sometimes
+        const fallbackLink = document.createElement('a');
+        fallbackLink.href = asset.rawUrl;
+        fallbackLink.download = asset.name;
+        fallbackLink.target = '_blank';
+        document.body.appendChild(fallbackLink);
+        fallbackLink.click();
+        document.body.removeChild(fallbackLink);
+        downloadBtn.innerHTML = '⬇️ Retry?';
+        setTimeout(() => {
+          if (downloadBtn) downloadBtn.innerHTML = originalText;
+          downloadBtn.disabled = false;
+        }, 1800);
+      }
+    });
+    
+    infoDiv.appendChild(nameSpan);
+    infoDiv.appendChild(downloadBtn);
+    card.appendChild(imgDiv);
+    card.appendChild(infoDiv);
+    
+    return card;
+  }
+  
+  // render gallery with assets
+  function renderGallery(assets) {
+    galleryEl.innerHTML = '';
+    if (!assets || assets.length === 0) {
+      const emptyMsg = document.createElement('div');
+      emptyMsg.className = 'status-message';
+      emptyMsg.innerHTML = `
+        <div style="font-size:2rem;">🖼️✨</div>
+        <h3>No images found in the "${IMAGES_FOLDER}" folder</h3>
+        <p>Add your masterpiece images to the <strong>/${IMAGES_FOLDER}/</strong> folder inside your GitHub repo.</p>
+        <div style="margin-top: 1rem;"><span class="retry-link" id="retryFetchBtn">⟳ refresh gallery</span></div>
+      `;
+      galleryEl.appendChild(emptyMsg);
+      const retryBtn = emptyMsg.querySelector('#retryFetchBtn');
+      if (retryBtn) retryBtn.addEventListener('click', () => loadAndDisplayImages());
+      return;
+    }
+    
+    // fragment for performance
+    const fragment = document.createDocumentFragment();
+    for (const asset of assets) {
+      const card = createImageCard(asset);
+      fragment.appendChild(card);
+    }
+    galleryEl.appendChild(fragment);
+  }
+  
+  function showErrorState(errorMsg) {
+    galleryEl.innerHTML = '';
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'status-message';
+    errorDiv.style.background = "#fff0e0";
+    errorDiv.innerHTML = `
+      <div>⚠️ Craft Storage Error</div>
+      <p style="margin-top: 0.75rem; font-size:0.9rem;">${escapeHtml(errorMsg)}</p>
+      <div style="margin-top: 1.2rem;">
+        <span class="retry-link" id="errorRetryBtn">⟳ Retry connection</span>
+      </div>
+      <div style="font-size:0.75rem; margin-top: 1rem; background:#ede5d4; border-radius:24px; padding:6px 12px;">
+        💡 Make sure:<br/>
+        1. GitHub username/repo set correctly in script.<br/>
+        2. Folder <strong>/${IMAGES_FOLDER}</strong> exists in your repository (exactly same name).<br/>
+        3. At least one image (.jpg, .png, .webp, etc.) inside that folder.<br/>
+        4. Repository is public (API works for public repos).
+      </div>
+    `;
+    galleryEl.appendChild(errorDiv);
+    const retry = errorDiv.querySelector('#errorRetryBtn');
+    if (retry) retry.addEventListener('click', () => loadAndDisplayImages());
+  }
+  
+  // simple escape for safety
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+      return c;
+    });
+  }
+  
+  // main loader wrapper
+  async function loadAndDisplayImages() {
+    // Show loading state
+    galleryEl.innerHTML = `
+      <div class="status-message">
+        <div class="loading-spinner"></div>
+        <div>🔍 scanning GitHub · fetching from ${GITHUB_USERNAME}/${REPO_NAME}/${IMAGES_FOLDER}</div>
+        <div style="font-size:0.7rem; margin-top:8px;">allow a moment for API response</div>
+      </div>
+    `;
+    
+    try {
+      const assets = await fetchImageAssetsFromGitHub();
+      renderGallery(assets);
+    } catch (err) {
+      let userMessage = err.message || "Unable to load images. Check console or repo settings.";
+      if (userMessage.includes("Folder '/images/' not found")) {
+        userMessage = `⚠️ Folder "${IMAGES_FOLDER}" does not exist in the repository. Create it and add images.`;
+      } else if (userMessage.includes("not appear to be a folder")) {
+        userMessage = `The path "${IMAGES_FOLDER}" is not a valid directory or is empty. Ensure you have a folder named exactly '${IMAGES_FOLDER}' in the root of your repo.`;
+      }
+      showErrorState(userMessage);
+    }
+  }
+  
+  // ------------------------ INITIAL CONFIGURATION VALIDATION & DIRECT INSTRUCTION-----------------------
+  // check if user has changed default placeholders - show helpful message if placeholders remain.
+  function checkConfigurationAndWarn() {
+    if (GITHUB_USERNAME === "YOUR_GITHUB_USERNAME" || REPO_NAME === "YOUR_REPO_NAME") {
+      const warningDiv = document.createElement('div');
+      warningDiv.style.maxWidth = "900px";
+      warningDiv.style.margin = "0 auto 1rem auto";
+      warningDiv.style.background = "#fbe9c3";
+      warningDiv.style.borderRadius = "60px";
+      warningDiv.style.padding = "12px 22px";
+      warningDiv.style.textAlign = "center";
+      warningDiv.style.fontSize = "0.9rem";
+      warningDiv.style.border = "1px solid #ebb45e";
+      warningDiv.innerHTML = `
+        ⚙️ <strong>Setup needed:</strong> Edit the script (inside index.html) and set your <strong>GITHUB_USERNAME</strong> and <strong>REPO_NAME</strong> to your actual GitHub username & repo containing the '${IMAGES_FOLDER}' folder.
+        <button id="closeSetupHint" style="margin-left:12px; background:transparent; border:none; font-weight:bold; cursor:pointer;">✖</button>
+      `;
+      const headerRef = document.querySelector('.header');
+      if (headerRef) headerRef.insertAdjacentElement('afterend', warningDiv);
+      const closeBtn = warningDiv.querySelector('#closeSetupHint');
+      if (closeBtn) closeBtn.addEventListener('click', () => warningDiv.remove());
+    }
+  }
+  
+  // after page load, fetch images and also show config hint
+  window.addEventListener('DOMContentLoaded', () => {
+    checkConfigurationAndWarn();
+    // if still default, we still try to show demo, but explicit error will guide
+    loadAndDisplayImages();
+  });
+  
+  // optional: provide manual refresh mechanism (add small refresh button in header maybe)
+  const headerEl = document.querySelector('.header');
+  if (headerEl) {
+    const refreshBtn = document.createElement('button');
+    refreshBtn.style.background = "#ece2cf";
+    refreshBtn.style.border = "none";
+    refreshBtn.style.borderRadius = "40px";
+    refreshBtn.style.padding = "6px 16px";
+    refreshBtn.style.fontSize = "0.75rem";
+    refreshBtn.style.fontWeight = "500";
+    refreshBtn.style.marginTop = "12px";
+    refreshBtn.style.cursor = "pointer";
+    refreshBtn.style.boxShadow = "0 1px 2px rgba(0,0,0,0.05)";
+    refreshBtn.innerHTML = "🔄 refresh gallery from GitHub";
+    refreshBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      loadAndDisplayImages();
+    });
+    headerEl.appendChild(refreshBtn);
+  }
+  
+</script>
+</body>
+  </html>
