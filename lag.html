@@ -14,25 +14,36 @@
 
     html, body {
       height: 100%;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      min-height: 100vh;
-      background: url('https://raw.githubusercontent.com/LAG-FF/Craftland-Assets/refs/heads/main/assets/BG.jpg') center/cover fixed no-repeat;
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
+      background: #0a0f1a;
       font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
       color: #ffffff;
       padding: 2rem 1.5rem;
       position: relative;
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
     }
 
     body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://raw.githubusercontent.com/LAG-FF/Craftland-Assets/refs/heads/main/assets/BG.jpg') center/cover no-repeat fixed;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      z-index: -2;
+      transform: translateZ(0);
+      will-change: transform;
+    }
+
+    body::after {
       content: '';
       position: fixed;
       top: 0;
@@ -64,6 +75,8 @@
     .header {
       text-align: center;
       margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
     }
 
     .header h1 {
@@ -122,6 +135,8 @@
       align-items: center;
       gap: 1rem;
       padding: 0 0.5rem;
+      position: relative;
+      z-index: 1;
     }
 
     .search-container {
@@ -159,6 +174,8 @@
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 2rem;
       padding: 0.5rem;
+      position: relative;
+      z-index: 1;
     }
 
     .image-card {
@@ -342,6 +359,8 @@
       flex-direction: column;
       gap: 0.75rem;
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
 
     .footer-link {
