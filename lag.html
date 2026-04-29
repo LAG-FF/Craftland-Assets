@@ -12,13 +12,17 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    html {
-      scroll-behavior: smooth;
+    html, body {
+      height: 100%;
     }
 
     body {
       min-height: 100vh;
       background: url('https://raw.githubusercontent.com/LAG-FF/Craftland-Assets/refs/heads/main/assets/BG.jpg') center/cover fixed no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
       font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
       color: #ffffff;
       padding: 2rem 1.5rem;
@@ -26,6 +30,18 @@
       transform: translateZ(0);
       backface-visibility: hidden;
       -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(10, 20, 30, 0.4);
+      z-index: -1;
+      pointer-events: none;
     }
 
     .image-card, .status-message, .top-bar .search-input, .scroll-top-btn {
@@ -321,6 +337,7 @@
       text-align: center;
       margin-top: 4rem;
       padding-top: 2rem;
+      padding-bottom: 1rem;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
