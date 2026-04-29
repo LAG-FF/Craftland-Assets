@@ -438,6 +438,35 @@
   const searchInput = document.getElementById("searchInput");
   const scrollTopBtn = document.getElementById("scrollTopBtn");
 
+  function getWebsiteUrl() {
+    return window.location.href;
+  }
+
+  function getShareableUrl(imageName) {
+    const baseUrl = window.location.origin + window.location.pathname;
+    const shareUrl = `${baseUrl}?image=${encodeURIComponent(imageName)}`;
+    return shareUrl;
+  }
+
+  function checkForSharedImage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedImage = urlParams.get('image');
+    if (sharedImage) {
+      setTimeout(() => {
+        const targetCard = document.querySelector(`.image-card[data-original-name="${sharedImage.toLowerCase()}"]`);
+        if (targetCard) {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetCard.style.transform = 'scale(1.02)';
+          targetCard.style.boxShadow = '0 0 0 3px rgba(74, 139, 76, 0.6)';
+          setTimeout(() => {
+            targetCard.style.transform = '';
+            targetCard.style.boxShadow = '';
+          }, 2000);
+        }
+      }, 500);
+    }
+  }
+
   function isImageFile(filename) {
     const ext = filename.substring(filename.lastIndexOf('.')).toLowerCase();
     return IMAGE_EXTENSIONS.includes(ext);
@@ -575,11 +604,18 @@
     
     shareBtn.addEventListener('click', async (e) => {
       e.stopPropagation();
+      const shareableUrl = getShareableUrl(asset.name);
+      const shareText = `Check out "${asset.displayName}" on Craftland Image Assets`;
+      
       try {
         if (navigator.share) {
-          await navigator.share({ title: `Craftland Asset: ${asset.displayName}`, url: asset.rawUrl });
+          await navigator.share({
+            title: `Craftland: ${asset.displayName}`,
+            text: shareText,
+            url: shareableUrl,
+          });
         } else {
-          await navigator.clipboard.writeText(asset.rawUrl);
+          await navigator.clipboard.writeText(shareableUrl);
           shareBtn.innerHTML = '✓ Link Copied!';
           setTimeout(() => {
             shareBtn.innerHTML = '';
@@ -590,7 +626,7 @@
       } catch (err) {
         if (err.name !== 'AbortError') {
           try {
-            await navigator.clipboard.writeText(asset.rawUrl);
+            await navigator.clipboard.writeText(shareableUrl);
             shareBtn.innerHTML = '✓ Copied!';
             setTimeout(() => {
               shareBtn.innerHTML = '';
@@ -643,6 +679,7 @@
     document.querySelectorAll('img, button img').forEach(img => {
       img.addEventListener('contextmenu', (e) => e.preventDefault());
     });
+    checkForSharedImage();
   }
 
   function showError(msg) {
